@@ -8,11 +8,10 @@
 1. scripts
 存储业务所需要的脚本,如tars2php.sh 负责的就是根据tars文件,生成客户端所需要的代码
 
-
 2. src 
 业务逻辑所在的目录,主要包含以下结构:
 - component: 存储Controller的基础类,方便所有的Controller公用
-- conf: 业务需要的配置, 这里只是给出一个demo,如果从平台下发配置,默认也会写入到这个文件夹中;
+- conf: 项目配置文件
 - controller: MVC模型中的C层;
 - database: 数据库连接配置.
 - libs: 存储公用类库, server/model扩展类库, 插件工具类 
