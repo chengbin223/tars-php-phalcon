@@ -11,6 +11,8 @@ class TarsTask
      */
     public function runAction($argv)
     {
+        class_alias(\HttpServer\tars\router\TarsRouteFactory::class, \Tars\route\RouteFactory::class);
+
         //php tarsCmd.php  conf restart
         $configPath = $argv[1];
         $pos = strpos($configPath, '--config=');

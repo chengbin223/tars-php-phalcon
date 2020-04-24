@@ -1,5 +1,5 @@
 <?php
-namespace PFrame\Libs\Models;
+namespace PFrame\Models;
 
 use PFrame\Libs\Extensions\InterfaceModel;
 

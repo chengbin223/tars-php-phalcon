@@ -1,9 +1,6 @@
 <?php
 namespace PFrame\Libs\Common;
 
-use PFrame\Libs\Common\SLog;
-use PFrame\Libs\ProServices\InitializeService as IntSvs;
-
 /**
  * 通用类：常用函数定义
  *  @email: luojinlong@innolife.cc

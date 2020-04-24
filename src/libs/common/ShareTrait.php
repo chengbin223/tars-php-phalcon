@@ -1,9 +1,8 @@
 <?php
 namespace PFrame\Libs\Common;
 
+use PFrame\Services\InitializeService as IntSvs;
 
-use PFrame\Libs\Common\SLog;
-use PFrame\Libs\Services\InitializeService as IntSvs;
 /**
  * 通用share trait
  * @author luojinlong

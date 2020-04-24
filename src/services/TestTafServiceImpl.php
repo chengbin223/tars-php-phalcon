@@ -1,6 +1,6 @@
 <?php
 
-namespace PFrame\Libs\Services;
+namespace PFrame\Services;
 
 use HttpServer\tars\servant\PHPTest\TarsPhalcon\tarsObj\TestTafServiceServant;
 

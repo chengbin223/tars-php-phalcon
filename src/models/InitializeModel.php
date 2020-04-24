@@ -1,5 +1,5 @@
 <?php
-namespace PFrame\Libs\Models;
+namespace PFrame\Models;
 /**
  * Models初始化,创建实例.
  *

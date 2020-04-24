@@ -31,6 +31,6 @@ return array(
         'protocolName' => 'tars', //http, json, tars or other
         'serverType' => 'tcp', //http(no_tars default), websocket, tcp(tars default), udp
         'home-api' => '\HttpServer\tars\servant\PHPTest\TarsPhalcon\tarsObj\TestTafServiceServant', //根据实际情况替换，遵循PSR-4即可，与tars.proto.php配置一致
-        'home-class' => '\PFrame\Libs\Services\TestTafServiceImpl', //根据实际情况替换，遵循PSR-4即可
+        'home-class' => '\PFrame\Services\TestTafServiceImpl', //根据实际情况替换，遵循PSR-4即可
     ]
 );

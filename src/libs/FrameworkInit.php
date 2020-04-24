@@ -13,6 +13,7 @@ if(!defined('TMP_PATH_LOG')) { define ( 'TMP_PATH_LOG',TMP_PATH.'logs/'.PROJECT_
  */
 $Config = new \Phalcon\Config(array(
     'application' => array(
+        'controllersDir' =>  PROJECT_PATH.'/controllers',
         'modelsDir'      =>  PROJECT_PATH.'/models/',
         'serviceDir'     =>  PROJECT_PATH.'/services/',
         'confDir'        =>  PROJECT_PATH.'/conf/',
@@ -46,11 +47,12 @@ $Config = new \Phalcon\Config(array(
 $Loader = new \Phalcon\Loader();
 
 $Loader->registerNamespaces(array(
-    'Phalcon' => PROJECT_PATH . '/vendor/phalcon/incubator/Library/Phalcon/',
+    'Phalcon'                      => PROJECT_PATH . '/vendor/phalcon/incubator/Library/Phalcon/',
     'PFrame\Tasks'                 => $Config->application->tasksDir,
     'PFrame\Conf'                  => $Config->application->confDir,
-    'PFrame\Libs\Models'           => $Config->application->modelsDir,
-    'PFrame\Libs\Services'         => $Config->application->serviceDir,
+    'PFrame\Controllers'           => $Config->application->controllersDir,
+    'PFrame\Models'                => $Config->application->modelsDir,
+    'PFrame\Services'              => $Config->application->serviceDir,
     'PFrame\Libs\Plugins'          => $Config->application->pluginsDir,
     'PFrame\Libs\Common'           => $Config->application->commonDir,
     'PFrame\Libs\Extensions'       => $Config->application->extDir,
@@ -63,11 +65,8 @@ $Loader->registerDirs(
         APP_CLI_PATH . '/tasks',
     )
 );
+
 $Loader->register();
-
-
-// 使用CLI工厂类作为默认的服务容器
-$di = new \Phalcon\DI\FactoryDefault\CLI ();
 
 $di->set ( 'profiler', function () {
     return new \Phalcon\Db\Profiler ();
@@ -139,25 +138,10 @@ if (!empty($MultiDbConfig['mysqlConfig'])) {
 //    }
 //}
 
-/**
- * Start the session the first time some component request the session service
- */
-$di->set ( 'session', function () {
-    $session = new \Phalcon\Session\Adapter\Files ();
-    $session->start ();
-
-    return $session;
-} );
-
 $di->set ( 'config', $Config );
-
 $di->set ( 'multiConfig', $MultiDbConfig);
-
 $di->set ( 'centerConfig', $CenterConfig );
 $di->set ( 'slog', function () {
     $SLog = new SLog ();
     return $SLog;
 } );
-
-
-return $Config;

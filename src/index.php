@@ -15,10 +15,10 @@ define ( 'PROJECT_NAME', SITE_NAME.'/'.APP_NAME);
 define ( 'PROJECT_PATH', realpath (__DIR__ ) );
 
 $CenterConfig = include PROJECT_PATH."/conf/CenterConfig.php";
-
 $MultiDbConfig = include PROJECT_PATH . "/database/MultiDbconfig.php";
+$di = include PROJECT_PATH . '/libs/di/cli.php';
 
-$Config = include PROJECT_PATH . "/libs/FrameworkInit.php";
+include PROJECT_PATH . "/libs/FrameworkInit.php";
 
 if ($Config->application->debug) {
     ini_set ( 'display_errors', '1' );

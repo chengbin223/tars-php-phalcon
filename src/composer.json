@@ -9,6 +9,9 @@
         "phptars/tars-log": "~0.1",
         "ext-zip" : ">=0.0.1"
     },
+    "require-dev": {
+        "phalcon/ide-stubs": "^3.4"
+    },
     "autoload": {
         "psr-4": {
             "HttpServer\\" : "./"

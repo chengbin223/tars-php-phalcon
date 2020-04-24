@@ -1,5 +1,5 @@
 <?php
-namespace PFrame\Libs\Services;
+namespace PFrame\Services;
 
 /**
  * Service初始化,创建实例.
