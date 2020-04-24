@@ -11,4 +11,13 @@ $router->addGet(
     ]
 );
 
+$router->addGet(
+    '/test/tars',
+    [
+        'namespace'  => 'PFrame\Controllers',
+        'controller' => 'tars',
+        'action'     => 'tars',
+    ]
+);
+
 return $router;

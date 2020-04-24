@@ -39,7 +39,9 @@ class TarsRoute implements Route
 
         $application = $this->app();
 
-        $phalconResponse = $application->handle();
+        $phalconResponse = $application->handle(
+            $application->request->getURI()
+        );
 
         $content = $phalconResponse->getContent();
         if (strlen($content) === 0 && ob_get_length() > 0) {
@@ -81,6 +83,8 @@ class TarsRoute implements Route
         $_COOKIE = isset($tarsRequest->data['cookie']) ? $tarsRequest->data['cookie'] : [];
         $_FILES = isset($tarsRequest->data['files']) ? $tarsRequest->data['files'] : [];
 
+        $_REQUEST = array_merge($_GET, $_POST, $_COOKIE);
+
         $headers = isset($tarsRequest->data['header']) ? $tarsRequest->data['header'] : [];
         foreach ($headers as $name => $value) {
             $key = str_replace('-', '_', $name);
@@ -101,13 +105,16 @@ class TarsRoute implements Route
 
     protected function clean()
     {
-        $this->app()->session->destroy();
+        if ($this->app()->session->isStarted()) {
+            $this->app()->session->destroy();
+        }
         $this->app()->cookies->reset();
         $_SERVER = [];
         $_GET = [];
         $_POST = [];
         $_COOKIE = [];
         $_FILES = [];
+        $_REQUEST = [];
         unset($GLOBALS['HTTP_RAW_POST_DATA']);
     }
 

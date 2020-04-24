@@ -3,11 +3,13 @@
  * 中心业务配置
  * Class CenterConfig
  */
-class CenterConfig extends \Phalcon\Config
-{
-    public function __construct(array $arrayConfig)
+if (!class_exists('CenterConfig')) {
+    class CenterConfig extends \Phalcon\Config
     {
-        parent::__construct($arrayConfig);
+        public function __construct(array $arrayConfig)
+        {
+            parent::__construct($arrayConfig);
+        }
     }
 }
 

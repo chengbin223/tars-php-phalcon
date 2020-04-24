@@ -15,20 +15,23 @@ $MultiDbConfig = include PROJECT_PATH . "/database/MultiDbconfig.php";
 $di = include PROJECT_PATH . '/libs/di/default.php';
 
 include PROJECT_PATH . "/libs/FrameworkInit.php";
-
-$di->set ( 'session', function () {
-    $session = new \Phalcon\Session\Adapter\Files ();
-    $session->start ();
-
-    return $session;
-} );
-
 $di->set(
     'router',
     function () {
         return include PROJECT_PATH . '/routes/api.php';
     }
 );
+$di->set(
+    'view',
+    function () {
+        return new \Phalcon\Mvc\View();
+    }
+);
+$di->set('dispatcher', function () {
+    $dispatcher = new \Phalcon\Mvc\Dispatcher();
+    $dispatcher->setDefaultNamespace('PFrame\Controllers');
+    return $dispatcher;
+});
 
 if ($Config->application->debug) {
     ini_set ( 'display_errors', '1' );

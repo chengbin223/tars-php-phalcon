@@ -4,11 +4,13 @@
  * mysql/redis/rabbitmq 配置文件入口
  * Class MultiDbConfig
  */
-class MultiDbConfig extends \Phalcon\Config
-{
-    public function __construct(array $arrayConfig)
+if (!class_exists('MultiDbConfig')) {
+    class MultiDbConfig extends \Phalcon\Config
     {
-        parent::__construct($arrayConfig);
+        public function __construct(array $arrayConfig)
+        {
+            parent::__construct($arrayConfig);
+        }
     }
 }
 

@@ -13,7 +13,7 @@ if(!defined('TMP_PATH_LOG')) { define ( 'TMP_PATH_LOG',TMP_PATH.'logs/'.PROJECT_
  */
 $Config = new \Phalcon\Config(array(
     'application' => array(
-        'controllersDir' =>  PROJECT_PATH.'/controllers',
+        'controllersDir' =>  PROJECT_PATH.'/controllers/',
         'modelsDir'      =>  PROJECT_PATH.'/models/',
         'serviceDir'     =>  PROJECT_PATH.'/services/',
         'confDir'        =>  PROJECT_PATH.'/conf/',
@@ -138,6 +138,15 @@ if (!empty($MultiDbConfig['mysqlConfig'])) {
 //    }
 //}
 
+/**
+ * Start the session the first time some component request the session service
+ */
+$di->set ( 'session', function () {
+    $session = new \Phalcon\Session\Adapter\Files ();
+    $session->start ();
+
+    return $session;
+} );
 $di->set ( 'config', $Config );
 $di->set ( 'multiConfig', $MultiDbConfig);
 $di->set ( 'centerConfig', $CenterConfig );

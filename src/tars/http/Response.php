@@ -62,7 +62,9 @@ class Response
 
         /* RFC2616 - 14.18 says all Responses need to have a Date */
         if (! $phalconResponse->getHeaders()->get('Date')) {
-            $phalconResponse->setHeader('Date', \DateTime::createFromFormat('U', time()));
+            $date = \DateTime::createFromFormat('U', time());
+            $date->setTimezone(new \DateTimeZone('UTC'));
+            $phalconResponse->setHeader('Date', $date->format('D, d M Y H:i:s').' GMT');
         }
 
         // status
