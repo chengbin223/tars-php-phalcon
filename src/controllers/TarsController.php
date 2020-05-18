@@ -2,6 +2,7 @@
 
 namespace PFrame\Controllers;
 
+use HttpServer\tars\Config;
 use HttpServer\tars\cservant\PHPTest\TarsPhalcon\tarsObj\TestTafServiceServant;
 
 class TarsController extends BaseController
@@ -18,10 +19,7 @@ class TarsController extends BaseController
      */
     public function tarsAction()
     {
-        $config = new \Tars\client\CommunicatorConfig(); //这里配置的是tars主控地址
-        $config->init($this->centerConfig()->tarsDeployCfg);
-        $config->setCharsetName("UTF-8"); //字符集
-        $config->setSocketMode(2);
+        $config = Config::communicatorConfig($this->centerConfig()->tarsDeployCfg);
 
         $cservent = new TestTafServiceServant($config);
 
