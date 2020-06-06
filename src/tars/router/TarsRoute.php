@@ -90,7 +90,7 @@ class TarsRoute implements Route
             $key = str_replace('-', '_', $name);
             $key = strtoupper($key);
 
-            if (! in_array($key, ['REMOTE_ADDR', 'SERVER_PORT', 'HTTPS'])) {
+            if (! in_array($key, ['CONTENT_LENGTH', 'CONTENT_MD5', 'CONTENT_TYPE', 'REMOTE_ADDR', 'SERVER_PORT', 'HTTPS'])) {
                 $key = 'HTTP_' . $key;
             }
 
@@ -101,6 +101,8 @@ class TarsRoute implements Route
             (is_array($tarsRequest->data['post']) ? http_build_query($tarsRequest->data['post']) : $tarsRequest->data['post']) :
             null;
         $GLOBALS['HTTP_RAW_POST_DATA'] = $content;
+
+
     }
 
     protected function clean()
