@@ -105,7 +105,7 @@ class TarsRoute implements Route
             }
         }
 
-        $content = $tarsRequest->data['post'] ?
+        $content = isset($tarsRequest->data['post']) ?
             (is_array($tarsRequest->data['post']) ? http_build_query($tarsRequest->data['post']) : $tarsRequest->data['post']) :
             null;
         $GLOBALS['HTTP_RAW_POST_DATA'] = $content;
