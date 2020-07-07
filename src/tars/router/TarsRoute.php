@@ -17,13 +17,13 @@ class TarsRoute implements Route
         Boot::handle();
 
         try {
-            clearstatcache();
+            $this->clean();
 
             $phalconResponse = $this->handle($request);
 
-            $this->clean();
-
             $this->response($response, $phalconResponse);
+
+            $this->clean();
         } catch (\Exception $e) {
             $response->status(500);
             $response->send($e->getMessage() . '|' . $e->getTraceAsString());
@@ -105,6 +105,7 @@ class TarsRoute implements Route
 
     protected function clean()
     {
+        clearstatcache();
         if ($this->app()->session->isStarted()) {
             $this->app()->session->destroy();
         }
