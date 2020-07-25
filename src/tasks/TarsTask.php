@@ -19,7 +19,8 @@ class TarsTask
 
         $configPath = substr($configPath, $pos + 9);
 
-        $this->getShared('centerConfig')->tarsDeployCfg = $configPath;
+        $centerConfig = $this->getShared('centerConfig');
+        $centerConfig['tarsDeployCfg'] = $configPath;
 
         $cmd = strtolower($argv[2]);
 

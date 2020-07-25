@@ -40,7 +40,7 @@ class Boot
         if ($configtext) {
             $remoteConfig = json_decode($configtext, true);
             $centerConfig = self::getCenterConfig();
-            $centerConfig->tars = $remoteConfig;
+            $centerConfig['tars'] = $remoteConfig;
         }
     }
 
