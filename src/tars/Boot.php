@@ -9,20 +9,25 @@ class Boot
 {
     private static $booted = false;
 
+    protected static function getCenterConfig()
+    {
+        return \Phalcon\DI::getDefault()->getShared('centerConfig');
+    }
+
     public static function handle()
     {
         if (!self::$booted) {
-//            $localConfig = config('tars');
-//
+            $centerConfig = self::getCenterConfig();
+
 //            $logLevel = isset($localConfig['log_level']) ? $localConfig['log_level'] : Logger::INFO;
-//
-//            $deployConfig = App::getTarsConfig();
-//            $tarsServerConf = $deployConfig['tars']['application']['server'];
-//            $appName = $tarsServerConf['app'];
-//            $serverName = $tarsServerConf['server'];
-//
-//            self::fetchConfig($localConfig['deploy_cfg'], $appName, $serverName);
-//
+
+            $deployConfig = App::getTarsConfig();
+            $tarsServerConf = $deployConfig['tars']['application']['server'];
+            $appName = $tarsServerConf['app'];
+            $serverName = $tarsServerConf['server'];
+
+            self::fetchConfig($centerConfig->tarsDeployCfg, $appName, $serverName);
+
 //            self::setTarsLog($localConfig['deploy_cfg'], $logLevel);
 
             self::$booted = true;
@@ -31,13 +36,12 @@ class Boot
 
     private static function fetchConfig($deployConfigPath, $appName, $serverName)
     {
-//        $configtext = Config::fetch($deployConfigPath, $appName, $serverName);
-//        if ($configtext) {
-//            $remoteConfig = json_decode($configtext, true);
-//            foreach ($remoteConfig as $configName => $configValue) {
-//                app('config')->set($configName, array_merge(config($configName) ?: [], $configValue));
-//            }
-//        }
+        $configtext = Config::fetch($deployConfigPath, $appName, $serverName);
+        if ($configtext) {
+            $remoteConfig = json_decode($configtext, true);
+            $centerConfig = self::getCenterConfig();
+            $centerConfig->tars = $remoteConfig;
+        }
     }
 
     private static function setTarsLog($deployConfigPath, $level = Logger::INFO)

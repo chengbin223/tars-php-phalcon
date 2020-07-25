@@ -90,17 +90,36 @@ class TarsRoute implements Route
             $key = str_replace('-', '_', $name);
             $key = strtoupper($key);
 
-            if (! in_array($key, ['REMOTE_ADDR', 'SERVER_PORT', 'HTTPS'])) {
+            if (! in_array($key, ['CONTENT_LENGTH', 'CONTENT_MD5', 'CONTENT_TYPE', 'REMOTE_ADDR', 'SERVER_PORT', 'HTTPS'])) {
                 $key = 'HTTP_' . $key;
             }
 
             $_SERVER[$key] = $value;
         }
+        if ('cli-server' === PHP_SAPI) {
+            if (array_key_exists('HTTP_CONTENT_LENGTH', $_SERVER)) {
+                $_SERVER['CONTENT_LENGTH'] = $_SERVER['HTTP_CONTENT_LENGTH'];
+            }
+            if (array_key_exists('HTTP_CONTENT_TYPE', $_SERVER)) {
+                $_SERVER['CONTENT_TYPE'] = $_SERVER['HTTP_CONTENT_TYPE'];
+            }
+        }
 
-        $content = $tarsRequest->data['post'] ?
+        $content = isset($tarsRequest->data['post']) ?
             (is_array($tarsRequest->data['post']) ? http_build_query($tarsRequest->data['post']) : $tarsRequest->data['post']) :
             null;
         $GLOBALS['HTTP_RAW_POST_DATA'] = $content;
+
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : null;
+        $requestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null;
+        if (0 === stripos($contentType, 'application/x-www-form-urlencoded')
+            && in_array(strtoupper($requestMethod), array('PUT', 'DELETE', 'PATCH'))
+        ) {
+            parse_str($content, $data);
+            $_POST = array_merge($_POST, $data);
+        } elseif (0 === stripos($contentType, 'application/json')) {
+            $_POST = array_merge($_POST, json_decode($content, true));
+        }
     }
 
     protected function clean()
