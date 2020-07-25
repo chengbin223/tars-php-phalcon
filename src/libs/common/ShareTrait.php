@@ -79,8 +79,7 @@ trait ShareTrait
             return false;
         }
 
-        $res = $di->getShared($configKey);
-        return $res;
+        return $di->getShared($configKey);
     }
     /**
      * 跟踪日志， 记录类方法请求参数数据。
