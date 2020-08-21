@@ -30,4 +30,9 @@ class Config
 
         return self::$communicatorConfig = $config;
     }
+
+    public static function getPhalconCenterConfig()
+    {
+        return \Phalcon\DI::getDefault()->getShared('centerConfig');
+    }
 }

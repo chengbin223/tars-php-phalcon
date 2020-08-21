@@ -2,6 +2,7 @@
 
 namespace HttpServer\tars\router;
 
+use HttpServer\tars\App;
 use HttpServer\tars\Boot;
 use Phalcon\Mvc\Application;
 use Tars\core\Request;
@@ -10,8 +11,6 @@ use Tars\route\Route;
 
 class TarsRoute implements Route
 {
-    protected static $app;
-
     public function dispatch(Request $request, Response $response)
     {
         Boot::handle();
@@ -148,17 +147,6 @@ class TarsRoute implements Route
      */
     protected function app()
     {
-        if (self::$app) {
-            return self::$app;
-        }
-        return self::$app = $this->createApp();
-    }
-
-    /**
-     * @return Application
-     */
-    protected function createApp()
-    {
-        return include PROJECT_PATH . '/bootstrap/app.php';
+        return App::getApp();
     }
 }

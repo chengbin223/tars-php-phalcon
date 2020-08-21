@@ -11,12 +11,12 @@ class Boot
 
     protected static function getCenterConfig()
     {
-        return \Phalcon\DI::getDefault()->getShared('centerConfig');
+        return Config::getPhalconCenterConfig();
     }
 
-    public static function handle()
+    public static function handle($force = false)
     {
-        if (!self::$booted) {
+        if ((!self::$booted) || $force) {
             $centerConfig = self::getCenterConfig();
 
 //            $logLevel = isset($localConfig['log_level']) ? $localConfig['log_level'] : Logger::INFO;
